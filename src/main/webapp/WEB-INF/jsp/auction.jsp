@@ -27,7 +27,6 @@
     			<th>Item Name</th>
     			<th>Description</th>
     			<th>Current Bid</th>
-    			<th>Highest Bidder</th>
     			<th>#Action</th>
     		</tr>
     		
@@ -37,11 +36,6 @@
     			<td>${item.name}</td>
     			<td>${item.description}</td>
     			<td>${item.currentBid}</td>
-    			
-    			<c:if test="${not empty bidder}">
-    			<td>${bidder.username}</td>
-    			</c:if>
-    			
     			<td><a href="/bid/${item.id}">Bid</a></td>
     		</tr>
     		</c:forEach>

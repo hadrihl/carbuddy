@@ -1,7 +1,11 @@
 package com.example.carbuddy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,7 +55,9 @@ public class BiddingController {
 	
 	@GetMapping("/bid/{id}")
 	public String getBidPage(Model model, @PathVariable("id") Long id) {
-		model.addAttribute("item", biddingService.getItemById(id));
+		Item item = biddingService.getItemById(id);
+		model.addAttribute("item", item);
+		model.addAttribute("bidder", biddingService.getBidderByItemId(item));
 		return "bid";
 	}
 	
@@ -59,12 +65,15 @@ public class BiddingController {
 	public String BidItem(@PathVariable("item_id") Long item_id, HttpServletRequest request, @ModelAttribute("bid") Bid bid) {
 		String username = request.getParameter("username");
 		biddingService.bidItem(item_id, username, bid);
-		return "redirect:/items";
+		return "redirect:/auction";
 	}
 	
 	@GetMapping("/auction")
 	public String getAuctionPage(Model model) {
-		model.addAttribute("items", biddingService.getAllItems());
+		List<Item> items = biddingService.getAllItems();
+		
+		model.addAttribute("items", items);
+		
 		return "auction";
 	}
 	

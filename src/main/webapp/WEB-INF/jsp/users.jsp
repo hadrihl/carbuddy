@@ -34,7 +34,7 @@
     			<td>${row.index + 1}</td>
     			<td>${bidder.username}</td>
     			<td>${bidder.email}</td>
-    			<td><a href="#">Edit</a></br>
+    			<td><a href="#">Edit</a>&nbsp;
     			<a href="#">Delete</a></td>
     		</tr>
     		</c:forEach>

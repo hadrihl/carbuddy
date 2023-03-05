@@ -10,6 +10,8 @@ public class BiddingService {
 	
 	@Autowired private ItemRepository itemRepository;
 	
+	@Autowired private BidRepository bidRepository;
+	
 	@Autowired private BidderRepository bidderRepository;
 	
 	@Autowired private AuctionRepository auctionRepository;
@@ -29,6 +31,10 @@ public class BiddingService {
 		return itemRepository.findAll();
 	}
 	
+	public Bidder getBidderByItemId(Item item) {
+		return bidRepository.findBidderByHighestBid(item, item.getCurrentBid());
+	}
+	
 	public Bidder addBidder(Bidder bidder) {
 		return bidderRepository.save(bidder);
 	}
@@ -45,9 +51,14 @@ public class BiddingService {
 			itemRepository.save(item);
 			bid.setItem(item);
 			bid.setBidder(bidderRepository.findBidderByUsername(username));
+			bidRepository.save(bid);
 		}
 		
 		return bid;
+	}
+	
+	public Bid getBidByItemId(Long item_id, Float currentBid) {
+		return bidRepository.findBidByHighestBid(item_id, currentBid);
 	}
 	
 }
