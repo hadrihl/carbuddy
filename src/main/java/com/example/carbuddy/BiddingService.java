@@ -13,8 +13,6 @@ public class BiddingService {
 	@Autowired private BidRepository bidRepository;
 	
 	@Autowired private BidderRepository bidderRepository;
-	
-	@Autowired private AuctionRepository auctionRepository;
 
 	public Item addItem(Item item) {
 		System.err.println("item.name: " + item.getName());

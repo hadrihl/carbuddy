@@ -21,9 +21,6 @@ public class Item {
 	
 	private Float currentBid;
 
-	@ManyToOne
-	private Auction auction;
-
 	public Long getId() {
 		return id;
 	}
@@ -54,13 +51,5 @@ public class Item {
 
 	public void setCurrentBid(Float currentBid) {
 		this.currentBid = currentBid;
-	}
-
-	public Auction getAuction() {
-		return auction;
-	}
-
-	public void setAuction(Auction auction) {
-		this.auction = auction;
 	}
 }
