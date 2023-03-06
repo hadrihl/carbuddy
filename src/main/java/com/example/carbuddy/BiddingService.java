@@ -33,9 +33,21 @@ public class BiddingService {
 		return bidRepository.findBidderByHighestBid(item, item.getCurrentBid());
 	}
 	
+	public Bidder getBidderByBidderId(Long user_id) {
+		return bidderRepository.findById(user_id).get();
+	}
+	
 	public Bidder addBidder(Bidder bidder) {
 		return bidderRepository.save(bidder);
 	}
+	
+	public Bidder updateUserProfile(Long user_id, Bidder user) {
+		Bidder tmp = bidderRepository.findById(user_id).get();
+		tmp.setUsername(user.getUsername());
+		tmp.setEmail(user.getEmail());
+		
+		return bidderRepository.save(tmp);
+	} 
 	
 	public List<Bidder> getAllBidders() {
 		return bidderRepository.findAll();
@@ -57,6 +69,10 @@ public class BiddingService {
 	
 	public Bid getBidByItemId(Long item_id, Float currentBid) {
 		return bidRepository.findBidByHighestBid(item_id, currentBid);
+	}
+	
+	public void deleteUserById(Long user_id) {
+		bidderRepository.deleteById(user_id);
 	}
 	
 }

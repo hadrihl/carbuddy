@@ -27,6 +27,7 @@
     			<th>Item Name</th>
     			<th>Description</th>
     			<th>Current Bid</th>
+    			<th>Auction Time left:</th>
     			<th>#Action</th>
     		</tr>
     		
@@ -36,6 +37,7 @@
     			<td>${item.name}</td>
     			<td>${item.description}</td>
     			<td>${item.currentBid}</td>
+    			<td>${item.endTime } &nbsp; ${item.duration}</td>
     			<td><a href="/bid/${item.id}">Bid</a></td>
     		</tr>
     		</c:forEach>
@@ -45,6 +47,12 @@
     </div>
     </c:if>
 
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.7/jquery.timeago.min.js" type="text/javascript"></script>
+     	<script>
+     		jQuery(document).ready(function() {
+     		  jQuery("time.timeago").timeago();
+     		});
+     	</script>
 </body>
 </html>

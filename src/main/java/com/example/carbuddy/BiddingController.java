@@ -53,6 +53,25 @@ public class BiddingController {
 		return "redirect:/users";
 	}
 	
+	@GetMapping("/edit-user/{id}")
+	public String editUser(Model model, @PathVariable("id") Long user_id) {
+		Bidder bidder = biddingService.getBidderByBidderId(user_id);
+		model.addAttribute("user", bidder);
+		return "edit-user";
+	}
+	
+	@PostMapping("/edit-user/{id}")
+	public String updateUserProfile(@PathVariable("id") Long user_id, @ModelAttribute("user") Bidder bidder) {
+		biddingService.updateUserProfile(user_id, bidder);
+		return "redirect:/users";
+	}
+	
+	@GetMapping("/delete-user/{id}")
+	public String deleteUser(@PathVariable("id") Long user_id) {
+		biddingService.deleteUserById(user_id);
+		return "redirect:/users";
+	}
+	
 	@GetMapping("/bid/{id}")
 	public String getBidPage(Model model, @PathVariable("id") Long id) {
 		Item item = biddingService.getItemById(id);
