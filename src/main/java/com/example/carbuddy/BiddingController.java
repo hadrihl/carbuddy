@@ -1,5 +1,7 @@
 package com.example.carbuddy;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,6 +78,15 @@ public class BiddingController {
 	public String getBidPage(Model model, @PathVariable("id") Long id) {
 		Item item = biddingService.getItemById(id);
 		model.addAttribute("item", item);
+		
+		Duration duration = Duration.between(LocalDateTime.now(), item.getEndTime());
+		
+		if(duration.isNegative()) {
+			model.addAttribute("timeleft", null);
+		} else {
+		model.addAttribute("timeleft", duration.toMinutes());
+		}
+		
 		model.addAttribute("bidder", biddingService.getBidderByItemId(item));
 		return "bid";
 	}
@@ -87,12 +98,23 @@ public class BiddingController {
 		return "redirect:/auction";
 	}
 	
+	@GetMapping("/delete-item/{item_id}")
+	public String deleteItem(@PathVariable("item_id") Long item_id) {
+		biddingService.deleteItemByItemId(item_id);
+		return "redirect:/items";
+	}
+	
+	@PostMapping("/extend-auction/{item_id}")
+	public String extendAuction(@PathVariable("item_id") Long item_id) {
+		System.out.println("item_id: " + item_id);
+		biddingService.extendAuctionTime(item_id);
+		return "redirect:/bid/{item_id}";
+	}
+	
 	@GetMapping("/auction")
 	public String getAuctionPage(Model model) {
-		List<Item> items = biddingService.getAllItems();
-		
+		List<Item> items = biddingService.getAllItems();		
 		model.addAttribute("items", items);
-		
 		return "auction";
 	}
 	

@@ -1,5 +1,6 @@
 package com.example.carbuddy;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,10 @@ public class BiddingService {
 	
 	public List<Item> getAllItems() {
 		return itemRepository.findAll();
+	}
+	
+	public void deleteItemByItemId(Long item_id) {
+		itemRepository.deleteById(item_id);
 	}
 	
 	public Bidder getBidderByItemId(Item item) {
@@ -73,6 +78,12 @@ public class BiddingService {
 	
 	public void deleteUserById(Long user_id) {
 		bidderRepository.deleteById(user_id);
+	}
+	
+	public void extendAuctionTime(Long item_id) {
+		Item item = itemRepository.findById(item_id).get();
+		item.setEndTime(LocalDateTime.now().plus(item.getDuration()));
+		itemRepository.save(item);
 	}
 	
 }

@@ -27,7 +27,6 @@
     			<th>Item Name</th>
     			<th>Description</th>
     			<th>Current Bid</th>
-    			<th>Auction Time left:</th>
     			<th>#Action</th>
     		</tr>
     		
@@ -37,8 +36,8 @@
     			<td>${item.name}</td>
     			<td>${item.description}</td>
     			<td>${item.currentBid}</td>
-    			<td>${item.endTime } &nbsp; ${item.duration}</td>
-    			<td><a href="/bid/${item.id}">Bid</a></td>
+    			
+    			<td><a href="/delete-item/${item.id}">Delete</a></td>
     		</tr>
     		</c:forEach>
     	</table>

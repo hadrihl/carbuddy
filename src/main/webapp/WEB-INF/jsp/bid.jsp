@@ -21,6 +21,17 @@
 	
 		<c:if test="${empty bidder}"><p>Status: No one has bid this item.</c:if>
 		<c:if test="${not empty bidder}"><label for="username">Current Highest bidder:</label> <span>${bidder.username}</span></c:if>
+		
+		</br></br><label>Auction time created: ${item.endTime}</br>
+		
+		</label>
+		<c:if test="${not empty timeleft}"><p>Auction time left: ${timeleft} minutes</p></c:if>
+		<c:if test="${empty timeleft}"><p>Status: Auction expired.</p>
+			<form:form action="/extend-auction/${item.id}" method="post">
+			<button>Extend Auction</button>
+			</form:form>
+		</c:if>
+		
 	</c:if>
 	
 	</br></br></br></br>

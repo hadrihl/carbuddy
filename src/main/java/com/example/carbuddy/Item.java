@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -68,8 +67,8 @@ public class Item {
 		this.currentBid = currentBid;
 	}
 	
-	// check whether the current time is after the `end-time` 
-	// indicating the auction has ended
+	// check whether the current time is after 
+	// the `end-time` indicating the auction has ended
 	public boolean isExpired() {
 		return LocalDateTime.now().isAfter(endTime);
 	}
