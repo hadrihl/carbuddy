@@ -1,7 +1,10 @@
 package com.example.carbuddy;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -53,11 +56,40 @@ public class BiddingController {
 		return "redirect:/users";
 	}
 	
+	@GetMapping("/edit-user/{id}")
+	public String editUser(Model model, @PathVariable("id") Long user_id) {
+		Bidder bidder = biddingService.getBidderByBidderId(user_id);
+		model.addAttribute("user", bidder);
+		return "edit-user";
+	}
+	
+	@PostMapping("/edit-user/{id}")
+	public String updateUserProfile(@PathVariable("id") Long user_id, @ModelAttribute("user") Bidder bidder) {
+		biddingService.updateUserProfile(user_id, bidder);
+		return "redirect:/users";
+	}
+	
+	@GetMapping("/delete-user/{id}")
+	public String deleteUser(@PathVariable("id") Long user_id) {
+		biddingService.deleteUserById(user_id);
+		return "redirect:/users";
+	}
+	
 	@GetMapping("/bid/{id}")
 	public String getBidPage(Model model, @PathVariable("id") Long id) {
 		Item item = biddingService.getItemById(id);
 		model.addAttribute("item", item);
+		
+		Duration duration = Duration.between(LocalDateTime.now(), item.getEndTime());
+		
+		if(duration.isNegative()) {
+			model.addAttribute("timeleft", null);
+		} else {
+		model.addAttribute("timeleft", duration.toMinutes());
+		}
+		
 		model.addAttribute("bidder", biddingService.getBidderByItemId(item));
+		
 		return "bid";
 	}
 	
@@ -68,12 +100,23 @@ public class BiddingController {
 		return "redirect:/auction";
 	}
 	
+	@GetMapping("/delete-item/{item_id}")
+	public String deleteItem(@PathVariable("item_id") Long item_id) {
+		biddingService.deleteItemByItemId(item_id);
+		return "redirect:/items";
+	}
+	
+	@PostMapping("/extend-auction/{item_id}")
+	public String extendAuction(@PathVariable("item_id") Long item_id) {
+		System.out.println("item_id: " + item_id);
+		biddingService.extendAuctionTime(item_id);
+		return "redirect:/bid/{item_id}";
+	}
+	
 	@GetMapping("/auction")
 	public String getAuctionPage(Model model) {
-		List<Item> items = biddingService.getAllItems();
-		
+		List<Item> items = biddingService.getAllItems();		
 		model.addAttribute("items", items);
-		
 		return "auction";
 	}
 	

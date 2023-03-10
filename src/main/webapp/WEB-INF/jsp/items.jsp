@@ -36,7 +36,8 @@
     			<td>${item.name}</td>
     			<td>${item.description}</td>
     			<td>${item.currentBid}</td>
-    			<td><a href="/bid/${item.id}">Bid</a></td>
+    			
+    			<td><a href="/delete-item/${item.id}">Delete</a></td>
     		</tr>
     		</c:forEach>
     	</table>
@@ -45,6 +46,12 @@
     </div>
     </c:if>
 
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.7/jquery.timeago.min.js" type="text/javascript"></script>
+     	<script>
+     		jQuery(document).ready(function() {
+     		  jQuery("time.timeago").timeago();
+     		});
+     	</script>
 </body>
 </html>

@@ -1,8 +1,11 @@
 package com.example.carbuddy;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,8 +16,6 @@ public class BiddingService {
 	@Autowired private BidRepository bidRepository;
 	
 	@Autowired private BidderRepository bidderRepository;
-	
-	@Autowired private AuctionRepository auctionRepository;
 
 	public Item addItem(Item item) {
 		System.err.println("item.name: " + item.getName());
@@ -31,13 +32,29 @@ public class BiddingService {
 		return itemRepository.findAll();
 	}
 	
+	public void deleteItemByItemId(Long item_id) {
+		itemRepository.deleteById(item_id);
+	}
+	
 	public Bidder getBidderByItemId(Item item) {
 		return bidRepository.findBidderByHighestBid(item, item.getCurrentBid());
+	}
+	
+	public Bidder getBidderByBidderId(Long user_id) {
+		return bidderRepository.findById(user_id).get();
 	}
 	
 	public Bidder addBidder(Bidder bidder) {
 		return bidderRepository.save(bidder);
 	}
+	
+	public Bidder updateUserProfile(Long user_id, Bidder user) {
+		Bidder tmp = bidderRepository.findById(user_id).get();
+		tmp.setUsername(user.getUsername());
+		tmp.setEmail(user.getEmail());
+		
+		return bidderRepository.save(tmp);
+	} 
 	
 	public List<Bidder> getAllBidders() {
 		return bidderRepository.findAll();
@@ -61,5 +78,14 @@ public class BiddingService {
 		return bidRepository.findBidByHighestBid(item_id, currentBid);
 	}
 	
+	public void deleteUserById(Long user_id) {
+		bidderRepository.deleteById(user_id);
+	}
+	
+	public void extendAuctionTime(Long item_id) {
+		Item item = itemRepository.findById(item_id).get();
+		item.setEndTime(LocalDateTime.now().plus(item.getDuration()));
+		itemRepository.save(item);
+	}
 }
  
