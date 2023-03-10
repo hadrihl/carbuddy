@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -88,6 +89,7 @@ public class BiddingController {
 		}
 		
 		model.addAttribute("bidder", biddingService.getBidderByItemId(item));
+		
 		return "bid";
 	}
 	

@@ -2,12 +2,15 @@ package com.example.carbuddy;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,7 +25,12 @@ public class Item {
 	
 	private String description;
 	
+	private Float originalPrice;
+	
 	private Float currentBid;
+	
+	@OneToMany(mappedBy = "item", orphanRemoval = true)
+	private Set<Bid> bids = new HashSet<>();
 	
 	@Column(name = "endTime")
 	private LocalDateTime endTime;
@@ -88,4 +96,14 @@ public class Item {
 	public void setDuration(Duration duration) {
 		this.duration = duration;
 	}
+
+	public Float getOriginalPrice() {
+		return originalPrice;
+	}
+
+	public void setOriginalPrice(Float originalPrice) {
+		this.originalPrice = originalPrice;
+	}
+	
+	
 }

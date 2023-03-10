@@ -16,7 +16,10 @@
 		<label for="description">Description: </label>
 		<input type="text" id="description" name="description" value="${item.description}" readonly></input><br><br>
 		
-		<label for="currentBid">Bid (*min MYR): </label>
+		<label for="originalprice">Original Price: </label>
+		<input type="text" id="originalprice" name="originalprice" value="${item.originalPrice}" readonly></input><br><br>
+		
+		<label for="currentBid">Current Highest Bid (*min MYR): </label>
 		<input type="number" step="any" id="currentBid" name="currentBid" value="${item.currentBid}" readonly></input><br><br>
 	
 		<c:if test="${empty bidder}"><p>Status: No one has bid this item.</c:if>
@@ -68,6 +71,22 @@
     			submitBtn.setAttribute("disabled", "disabled");
     		}
     	}
+    </script>
+    <script>
+    	function refreshData() {
+    		console.log("@param: ");
+    		var id = ${item.id};
+    		var xhr = new XMLHttpRequest;
+    		xhr.open('GET', '/bid/'+id, true);
+    		xhr.onload = function() {
+    			var data = xhr.responseText;
+    			console.log("testing: " + JSON.stringify(data));
+    			
+    		};
+    		xhr.send();
+    	};
+    	
+    	setInterval(refreshData, 2000);
     </script>
 </body>
 </html>
