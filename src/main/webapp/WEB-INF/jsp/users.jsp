@@ -13,13 +13,16 @@
     </style>
 </head>
 <body>
-    <h1>Users</h1>
+	
+	<%@ include file="components/nav.jsp" %>
+
+    <h1>Manage Users</h1>
     
-    <c:if test="${empty bidders}">
+    <c:if test="${empty users}">
     <div class="container"><p>No user(s) found.</p></div>
     </c:if>
     
-    <c:if test="${not empty bidders}">
+    <c:if test="${not empty users}">
     <div class="container">
     	<table>
     		<tr>
@@ -29,13 +32,13 @@
     			<th>#Action</th>
     		</tr>
     		
-    		<c:forEach var="bidder" items="${bidders}" varStatus="row">
+    		<c:forEach var="user" items="${users}" varStatus="row">
     		<tr>
     			<td>${row.index + 1}</td>
-    			<td>${bidder.username}</td>
-    			<td>${bidder.email}</td>
-    			<td><a href="/edit-user/${bidder.id}">Edit</a>&nbsp;
-    			<a href="/delete-user/${bidder.id}">Delete</a></td>
+    			<td>${user.username}</td>
+    			<td>${user.email}</td>
+    			<td><a href="/edit-user/${user.id}">Edit</a>&nbsp;
+    			<a href="/delete-user/${user.id}">Delete</a></td>
     		</tr>
     		</c:forEach>
     	</table>

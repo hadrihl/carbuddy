@@ -1,26 +1,34 @@
-package com.example.carbuddy;
+package com.example.carbuddy.controller;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.authentication.UserServiceBeanDefinitionParser;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import com.example.carbuddy.entity.Bid;
+import com.example.carbuddy.entity.Item;
+import com.example.carbuddy.entity.User;
+import com.example.carbuddy.service.BiddingService;
+import com.example.carbuddy.service.CustomUserDetails;
+import com.example.carbuddy.service.UserService;
 
 @Controller
 public class BiddingController {
 	
 	@Autowired private BiddingService biddingService;
+	
+	@Autowired private UserService userService;
 
 	@GetMapping("/items")
 	public String getItemsPage(Model model) {
@@ -40,45 +48,47 @@ public class BiddingController {
 	}
 	
 	@GetMapping("/users")
-	public String getAllBidders(Model model) {
-		model.addAttribute("bidders", biddingService.getAllBidders());
+	public String getAllBidders(Model model, @AuthenticationPrincipal CustomUserDetails loggedinUser) {
+		model.addAttribute("users", userService.getAllUsers());
+		model.addAttribute("username", loggedinUser.getUsername());
 		return "users";
 	}
 	
 	@GetMapping("/add-user")
-	public String addBidderPage() {
+	public String addBidderPage(Model model, @AuthenticationPrincipal CustomUserDetails loggedinUser) {
+		model.addAttribute("username", loggedinUser.getUsername());
 		return "add-user";
 	}
 	
 	@PostMapping("/add-user")
-	public String addBidder(@ModelAttribute("bidder") Bidder bidder) {
-		biddingService.addBidder(bidder);
+	public String addBidder(@ModelAttribute("user") User user) {
+		userService.createUser(user);
 		return "redirect:/users";
 	}
 	
 	@GetMapping("/edit-user/{id}")
 	public String editUser(Model model, @PathVariable("id") Long user_id) {
-		Bidder bidder = biddingService.getBidderByBidderId(user_id);
-		model.addAttribute("user", bidder);
+		model.addAttribute("user", userService.getUserById(user_id));
 		return "edit-user";
 	}
 	
 	@PostMapping("/edit-user/{id}")
-	public String updateUserProfile(@PathVariable("id") Long user_id, @ModelAttribute("user") Bidder bidder) {
-		biddingService.updateUserProfile(user_id, bidder);
+	public String updateUserProfile(@PathVariable("id") Long user_id, @ModelAttribute("user") User user) {
+		biddingService.updateUserProfile(user_id, user);
 		return "redirect:/users";
 	}
 	
 	@GetMapping("/delete-user/{id}")
 	public String deleteUser(@PathVariable("id") Long user_id) {
-		biddingService.deleteUserById(user_id);
+		userService.deleteUser(user_id);
 		return "redirect:/users";
 	}
 	
 	@GetMapping("/bid/{id}")
-	public String getBidPage(Model model, @PathVariable("id") Long id) {
+	public String getBidPage(Model model, @PathVariable("id") Long id, @AuthenticationPrincipal CustomUserDetails loggedinUser) {
 		Item item = biddingService.getItemById(id);
 		model.addAttribute("item", item);
+		model.addAttribute("username", loggedinUser.getUsername());
 		
 		Duration duration = Duration.between(LocalDateTime.now(), item.getEndTime());
 		
@@ -114,10 +124,15 @@ public class BiddingController {
 	}
 	
 	@GetMapping("/auction")
-	public String getAuctionPage(Model model) {
+	public String getAuctionPage(Model model, @AuthenticationPrincipal CustomUserDetails loggedinUser) {
 		List<Item> items = biddingService.getAllItems();		
 		model.addAttribute("items", items);
+		model.addAttribute("username", loggedinUser.getUsername());
 		return "auction";
 	}
 	
+	@GetMapping("/signin")
+	public String getSigninPage() {
+		return "signin";
+	}
 }

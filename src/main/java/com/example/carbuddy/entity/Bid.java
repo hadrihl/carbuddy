@@ -1,4 +1,4 @@
-package com.example.carbuddy;
+package com.example.carbuddy.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,8 +18,8 @@ public class Bid {
 	private Long id;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "bidder_id")
-	private Bidder bidder;
+	@JoinColumn(name = "user_id")
+	private User user;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "item_id")
@@ -35,12 +35,12 @@ public class Bid {
 		this.id = id;
 	}
 
-	public Bidder getBidder() {
-		return bidder;
+	public User getUser() {
+		return user;
 	}
 
-	public void setBidder(Bidder bidder) {
-		this.bidder = bidder;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Item getItem() {

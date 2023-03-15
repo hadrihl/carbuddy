@@ -1,17 +1,23 @@
-package com.example.carbuddy;
+package com.example.carbuddy.entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "bidder")
-public class Bidder {
+@Table(name = "user")
+public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +29,15 @@ public class Bidder {
 	
 	private String password;
 	
-	@OneToMany(mappedBy = "bidder")
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+			name = "users_roles",
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "role_id")
+			)
+	Set<Role> roles = new HashSet<>();
+	
+	@OneToMany(mappedBy = "user")
 	private List<Bid> bids = new ArrayList<>();
 
 	public Long getId() {
@@ -58,15 +72,16 @@ public class Bidder {
 		this.password = password;
 	}
 
-	public List<Bid> getBids() {
-		return bids;
+	public Set<Role> getRoles() {
+		return roles;
 	}
 
-	public void addBid(Bid bid) {
-		this.bids.add(bid);
+	public void addRoles(Role role) {
+		this.roles.add(role);
 	}
 	
-	public void removeBid(Bid bid) {
-		this.bids.remove(bid);
+	public void removeRoles(Role role) {
+		this.roles.remove(role);
 	}
- }
+	
+}

@@ -13,6 +13,9 @@
     </style>
 </head>
 <body>
+
+	<%@ include file="components/nav.jsp" %>
+	
     <h1>Auctions</h1>
     
     <c:if test="${empty items}">
