@@ -7,9 +7,11 @@
     <title>CarBuddy | Add User</title>
 </head>
 <body>
+	<%@ include file="components/nav.jsp" %>
+	
     <h1>Add User</h1>
     
-	<form:form action="/add-user" method="POST" modelattribute="bidder">
+	<form:form action="/add-user" method="POST" modelattribute="user">
 		<label for="username">Username: </label>
 		<input type="text" id="username" name="username" required></input><br><br>
 		

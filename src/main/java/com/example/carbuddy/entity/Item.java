@@ -1,4 +1,4 @@
-package com.example.carbuddy;
+package com.example.carbuddy.entity;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

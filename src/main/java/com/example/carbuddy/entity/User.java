@@ -1,8 +1,9 @@
-package com.example.carbuddy;
+package com.example.carbuddy.entity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -34,6 +36,9 @@ public class User {
 			inverseJoinColumns = @JoinColumn(name = "role_id")
 			)
 	Set<Role> roles = new HashSet<>();
+	
+	@OneToMany(mappedBy = "user")
+	private List<Bid> bids = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -66,4 +71,17 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void addRoles(Role role) {
+		this.roles.add(role);
+	}
+	
+	public void removeRoles(Role role) {
+		this.roles.remove(role);
+	}
+	
 }

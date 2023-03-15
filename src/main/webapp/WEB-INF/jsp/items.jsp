@@ -13,7 +13,7 @@
     </style>
 </head>
 <body>
-    <h1>Items</h1>
+    <h1>Manage Items</h1>
     
     <c:if test="${empty items}">
     <div class="container"><p>No items found.</p></div>
@@ -37,7 +37,9 @@
     			<td>${item.description}</td>
     			<td>${item.currentBid}</td>
     			
-    			<td><a href="/delete-item/${item.id}">Delete</a></td>
+    			<td>
+    			<a href="/edit-item/{${item.id}">Edit</a> &nbsp;
+    			<a href="/delete-item/${item.id}">Delete</a></td>
     		</tr>
     		</c:forEach>
     	</table>

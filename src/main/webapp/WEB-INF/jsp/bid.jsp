@@ -7,6 +7,7 @@
     <title>CarBuddy | Bid</title>
 </head>
 <body>
+	<%@ include file="components/nav.jsp" %>
     <h1>Bid Item</h1>
     
     <c:if test="${not empty item}">
@@ -42,14 +43,14 @@
 	<form:form action="/bid/${item.id}" method="post" modelAttribute="bid">
 		
 		<label for="username">Username: </label>
-		<input type="text" id="username" name="username" required></br></br>
+		<input type="text" id="username" name="username" placeholder="${username}" readonly></br></br>
 		
 		<label for="amount">Your bid: </label>
 		<input type="number" step="any" id="amount" name="amount" required/></br>
 		<p style="font-size: 12px;"><i>Place your bid here, and make sure that your bid is higher than current bid.</i></p>
 		</br>
 	
-		<button type="button" onclick="location.href='/items'">Cancel</button>
+		<button type="button" onclick="location.href='/auction'">Cancel</button>
 		<button type="submit" id="submit" name="submit">Submit</button>
 	</form:form>
     
