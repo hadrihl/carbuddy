@@ -104,6 +104,4 @@ public class Item {
 	public void setOriginalPrice(Float originalPrice) {
 		this.originalPrice = originalPrice;
 	}
-	
-	
 }

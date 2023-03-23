@@ -29,7 +29,6 @@
     			<th>#</th>
     			<th>Item Name</th>
     			<th>Description</th>
-    			<th>Current Bid</th>
     			<th>#Action</th>
     		</tr>
     		
@@ -38,7 +37,6 @@
     			<td>${row.index + 1}</td>
     			<td>${item.name}</td>
     			<td>${item.description}</td>
-    			<td>${item.currentBid}</td>
     			<td><a href="/bid/${item.id}">Bid</a></td>
     		</tr>
     		</c:forEach>

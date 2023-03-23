@@ -2,6 +2,7 @@ package com.example.carbuddy.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -39,9 +40,15 @@ public class SecurityConfig {
 	public SecurityFilterChain configure(HttpSecurity http) throws Exception {
 		
 		http
+			.csrf().disable()
 			.authorizeHttpRequests()
+				.antMatchers(HttpMethod.GET, "/api/bids").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/bids/*").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/bids").permitAll()
+				.antMatchers(HttpMethod.PUT, "/api/bids/*").permitAll()
+				.antMatchers(HttpMethod.DELETE, "/api/bids/*").permitAll()
 				.anyRequest().authenticated()
-				.and()
+			.and()
 			.formLogin()
 				.loginPage("/signin")
 				.loginProcessingUrl("/login")
@@ -50,7 +57,6 @@ public class SecurityConfig {
 				.permitAll()
 				.and()
 			.logout()
-				.invalidateHttpSession(true)
 				.logoutSuccessUrl("/signin")
 				.permitAll();
 		

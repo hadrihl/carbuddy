@@ -32,15 +32,15 @@ public class UserService {
 	}
 	
 	public void createUser(User tmp) {
-	if(userRepository.findUserByUsername(tmp.getUsername()) == null) {
-		User user = new User();
-		user.setUsername(tmp.getUsername());
-		user.setEmail(tmp.getEmail());
-		user.setPassword(new BCryptPasswordEncoder().encode(tmp.getPassword()));
-		user.addRoles(roleRepository.findRoleByName("ROLE_USER"));
-		userRepository.save(user);
+		if(userRepository.findUserByUsername(tmp.getUsername()) == null) {
+			User user = new User();
+			user.setUsername(tmp.getUsername());
+			user.setEmail(tmp.getEmail());
+			user.setPassword(new BCryptPasswordEncoder().encode(tmp.getPassword()));
+			user.addRoles(roleRepository.findRoleByName("ROLE_USER"));
+			userRepository.save(user);
+		}
 	}
-		
-	}
+
 }
  

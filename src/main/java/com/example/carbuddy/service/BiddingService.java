@@ -27,6 +27,16 @@ public class BiddingService {
 		return itemRepository.save(item);
 	}
 	
+	public Item updateItem(Long item_id, Item item) {
+		Item existedItem = itemRepository.findById(item_id).get();
+		existedItem.setName(item.getName());
+		existedItem.setDescription(item.getDescription());
+		existedItem.setOriginalPrice(item.getOriginalPrice());
+		existedItem.setEndTime(item.getEndTime());
+		existedItem.setDuration(item.getDuration());
+		return itemRepository.save(existedItem);
+	}
+	
 	public Item getItemById(Long id) {
 		return itemRepository.findById(id).get();
 	}

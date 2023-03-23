@@ -19,7 +19,7 @@
 		<label for="currentBid">Bid (*min MYR): </label>
 		<input type="number" step="any" id="currentBid" name="currentBid" required></input><br><br>
 				
-		<button type="button" onclick="location.href='/items'">Cancel</button>
+		<button type="button" onclick="location.href='/auction'">Cancel</button>
 		<input type="submit" value="Submit">
 	</form:form>
     
