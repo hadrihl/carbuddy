@@ -27,15 +27,35 @@ public class UserService {
 		return userRepository.findById(user_id).get();
 	}
 	
+	public User getUserByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
+	
+	public User updateUser(Long id, User tmp, String role_admin) {
+		User user = userRepository.findById(id).get();
+		user.setUsername(tmp.getUsername());
+		user.setEmail(tmp.getEmail());
+		
+		// update ROLE_ADMIN
+		if(role_admin.contentEquals("on")) {
+			user.addRoles(roleRepository.findRoleByName("ROLE_ADMIN"));
+		} else {
+			user.removeRoles(roleRepository.findRoleByName("ROLE_ADMIN"));
+		}
+		
+		return userRepository.save(user);
+	}
+	
 	public void deleteUser(Long user_id) {
 		userRepository.deleteById(user_id);
 	}
 	
 	public void createUser(User tmp) {
-	if(userRepository.findUserByUsername(tmp.getUsername()) == null) {
+	if(userRepository.findByUsername(tmp.getUsername()) == null) {
 		User user = new User();
 		user.setUsername(tmp.getUsername());
 		user.setEmail(tmp.getEmail());
+		
 		user.setPassword(new BCryptPasswordEncoder().encode(tmp.getPassword()));
 		user.addRoles(roleRepository.findRoleByName("ROLE_USER"));
 		userRepository.save(user);

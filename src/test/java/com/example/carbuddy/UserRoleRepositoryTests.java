@@ -51,4 +51,11 @@ public class UserRoleRepositoryTests {
 		david.addRoles(roleRepository.findRoleByName("ROLE_USER"));
 		userRepository.save(david);
 	}
+	
+	@Test
+	public void assignRoleUserToAdmin() {
+		User admin = userRepository.findByUsername("admin");
+		admin.addRoles(roleRepository.findRoleByName("ROLE_USER"));
+		userRepository.save(admin);
+	}
 }

@@ -4,19 +4,21 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>Signin</title>
+    <title>Signup</title>
 </head>
 <body>
 	<%@ include file="components/nav.jsp" %>
-    <h1>Signin</h1>
+	 
+    <h1>Sign up</h1>
     
     <div class="container">
-    <form:form action="/login" method="post">
-    	
-    		<input type="text" id="username" name="username" placeholder="Enter username" autofocus required /> </br></br>
+    <form:form action="/signup/new" method="post">
+    
+    		<input type="text" id="username" name="username" placeholder="Enter Username" autofocus required /> </br></br>
+    		<input type="email" id="email" name="email" placeholder="Enter email" required /> </br></br>
     		<input type="password" id="password" name="password" placeholder="Enter password" required /> </br></br>
     		
-    		<input type="submit" value="Signin">
+    		<input type="submit" value="Signup">
     	</form:form>
     </div>
     
@@ -24,10 +26,6 @@
     <div class="container" style="margin-top: 10px;">
     	${str_err}
     </div>
-    </c:if>
-    
-    <c:if test="${not empty str_success}">
-    	<br><br>${str_success}<br><br>
     </c:if>
 
 </body>

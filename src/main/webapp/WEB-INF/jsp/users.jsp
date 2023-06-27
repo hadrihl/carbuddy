@@ -29,6 +29,7 @@
     			<th>#</th>
     			<th>Username</th>
     			<th>Email</th>
+    			<th>Role</th>
     			<th>#Action</th>
     		</tr>
     		
@@ -37,6 +38,14 @@
     			<td>${row.index + 1}</td>
     			<td>${user.username}</td>
     			<td>${user.email}</td>
+    			
+    			<td>
+				<c:forEach var="role" items="${user.roles}">
+				<c:if test="${role.name == 'ROLE_ADMIN'}">admin&nbsp;</c:if>
+				<c:if test="${role.name == 'ROLE_USER'}">user&nbsp;</c:if>
+				</c:forEach>
+				</td>
+
     			<td><a href="/edit-user/${user.id}">Edit</a>&nbsp;
     			<a href="/delete-user/${user.id}">Delete</a></td>
     		</tr>

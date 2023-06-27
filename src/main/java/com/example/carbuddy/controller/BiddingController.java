@@ -16,9 +16,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.example.carbuddy.entity.Bid;
 import com.example.carbuddy.entity.Item;
+import com.example.carbuddy.entity.Role;
 import com.example.carbuddy.entity.User;
+import com.example.carbuddy.repository.RoleRepository;
 import com.example.carbuddy.service.BiddingService;
 import com.example.carbuddy.service.CustomUserDetails;
 import com.example.carbuddy.service.UserService;
@@ -26,9 +30,14 @@ import com.example.carbuddy.service.UserService;
 @Controller
 public class BiddingController {
 	
-	@Autowired private BiddingService biddingService;
+	@Autowired 
+	private BiddingService biddingService;
 	
-	@Autowired private UserService userService;
+	@Autowired 
+	private UserService userService;
+	
+	@Autowired
+	private RoleRepository roleRepository;
 
 	@GetMapping("/items")
 	public String getItemsPage(Model model) {
@@ -44,6 +53,20 @@ public class BiddingController {
 	@PostMapping("/add-item")
 	public String addItem(@ModelAttribute("item") Item item) {
 		biddingService.addItem(item);
+		return "redirect:/items";
+	}
+	
+	@GetMapping("/edit-item/{id}")
+	public String editItemPage(@PathVariable("id") Long id, 
+			Model model) {
+		model.addAttribute("item", biddingService.getItemById(id));
+		return "edit-item";
+	}
+	
+	@PostMapping("/update-item/{id}")
+	public String updateItem(@PathVariable("id") Long id, 
+			@ModelAttribute("item") Item item) {
+		biddingService.updateItem(id, item);
 		return "redirect:/items";
 	}
 	
@@ -73,8 +96,11 @@ public class BiddingController {
 	}
 	
 	@PostMapping("/edit-user/{id}")
-	public String updateUserProfile(@PathVariable("id") Long user_id, @ModelAttribute("user") User user) {
-		biddingService.updateUserProfile(user_id, user);
+	public String updateUserProfile(@PathVariable("id") Long user_id, 
+			@ModelAttribute("user") User user,
+			@ModelAttribute("role_admin") String role_admin) {
+		
+		userService.updateUser(user_id, user, role_admin);
 		return "redirect:/users";
 	}
 	
@@ -134,5 +160,28 @@ public class BiddingController {
 	@GetMapping("/signin")
 	public String getSigninPage() {
 		return "signin";
+	}
+	
+	@GetMapping("/")
+	public String getHomepage() {
+		return "index";
+	}
+	
+	@GetMapping("/signup")
+	public String getSignupPage() {
+		return "signup";
+	}
+	
+	@PostMapping("/signup/new")
+	public String processSignup(@ModelAttribute("user") User user,
+			RedirectAttributes redirectAttributes) {
+		if(userService.getUserByEmail(user.getEmail()) == null) {
+			userService.createUser(user);
+			redirectAttributes.addFlashAttribute("str_success", "Account is created. Please proceed with sign in.");
+			return "redirect:/signin";
+		} else {
+			redirectAttributes.addFlashAttribute("str_err", "User already exists! Login '<a href='/signin'>here</a>'");
+			return "redirect:/signup";
+		}
 	}
 }

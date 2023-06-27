@@ -10,5 +10,8 @@ import com.example.carbuddy.entity.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
 	@Query("SELECT u FROM User u WHERE u.username = :username")
-	public User findUserByUsername(String username);
+	public User findByUsername(String username);
+	
+	@Query("SELECT u FROM User u WHERE u.email = ?1")
+	public User findByEmail(String email);
 }

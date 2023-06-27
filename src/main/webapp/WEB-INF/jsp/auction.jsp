@@ -20,6 +20,7 @@
     
     <c:if test="${empty items}">
     <div class="container"><p>No items found.</p></div>
+    <a href="/add-item"><button>Add Item</button></a>
     </c:if>
     
     <c:if test="${not empty items}">
@@ -47,7 +48,6 @@
     	</br></br><a href="/add-item"><button>Add Item</button></a>
     </div>
     </c:if>
-
     
 </body>
 </html>

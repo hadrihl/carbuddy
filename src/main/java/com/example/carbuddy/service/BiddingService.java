@@ -24,6 +24,16 @@ public class BiddingService {
 		System.err.println("item.name: " + item.getName());
 		System.err.println("item.description: " + item.getDescription());
 		System.err.println("item.currentBid: " + item.getCurrentBid());
+		item.setCurrentBid(Float.valueOf(0));
+		return itemRepository.save(item);
+	}
+	
+	public Item updateItem(Long id, Item item) {
+		Item tmp = itemRepository.findById(id).get();
+		tmp.setName(item.getName());
+		tmp.setDescription(item.getDescription());
+		tmp.setOriginalPrice(item.getOriginalPrice());
+	
 		return itemRepository.save(item);
 	}
 	
@@ -51,14 +61,6 @@ public class BiddingService {
 		return userRepository.save(user);
 	}
 	
-	public User updateUserProfile(Long user_id, User user) {
-		User tmp = userRepository.findById(user_id).get();
-		tmp.setUsername(user.getUsername());
-		tmp.setEmail(user.getEmail());
-		
-		return userRepository.save(tmp);
-	} 
-	
 	public List<User> getAllBidders() {
 		return userRepository.findAll();
 	}
@@ -70,7 +72,7 @@ public class BiddingService {
 			item.setCurrentBid(bid.getAmount());
 			itemRepository.save(item);
 			bid.setItem(item);
-			bid.setUser(userRepository.findUserByUsername(username));
+			bid.setUser(userRepository.findByUsername(username));
 			bidRepository.save(bid);
 		}
 		

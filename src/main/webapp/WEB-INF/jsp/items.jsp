@@ -13,10 +13,12 @@
     </style>
 </head>
 <body>
+	<%@ include file="components/nav.jsp" %>
     <h1>Manage Items</h1>
     
     <c:if test="${empty items}">
     <div class="container"><p>No items found.</p></div>
+    <a href="/add-item"><button>Add Item</button></a>
     </c:if>
     
     <c:if test="${not empty items}">
@@ -38,7 +40,7 @@
     			<td>${item.currentBid}</td>
     			
     			<td>
-    			<a href="/edit-item/{${item.id}">Edit</a> &nbsp;
+    			<a href="/edit-item/${item.id}">Edit</a> &nbsp;
     			<a href="/delete-item/${item.id}">Delete</a></td>
     		</tr>
     		</c:forEach>
