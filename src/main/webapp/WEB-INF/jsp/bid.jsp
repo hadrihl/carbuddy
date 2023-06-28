@@ -40,7 +40,7 @@
 	
 	</br></br></br></br>
 	<h1>Place Your Bid</h1>
-	<form:form action="/bid/${item.id}" method="post" modelAttribute="bid">
+	<form:form action="/bid/${item.id}/${username}" method="post" modelAttribute="bid">
 		
 		<label for="username">Username: </label>
 		<input type="text" id="username" name="username" placeholder="${username}" readonly></br></br>

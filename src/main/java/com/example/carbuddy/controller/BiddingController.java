@@ -111,7 +111,8 @@ public class BiddingController {
 	}
 	
 	@GetMapping("/bid/{id}")
-	public String getBidPage(Model model, @PathVariable("id") Long id, @AuthenticationPrincipal CustomUserDetails loggedinUser) {
+	public String getBidPage(Model model, @PathVariable("id") Long id, 
+			@AuthenticationPrincipal CustomUserDetails loggedinUser) {
 		Item item = biddingService.getItemById(id);
 		model.addAttribute("item", item);
 		model.addAttribute("username", loggedinUser.getUsername());
@@ -129,9 +130,11 @@ public class BiddingController {
 		return "bid";
 	}
 	
-	@PostMapping("/bid/{item_id}")
-	public String BidItem(@PathVariable("item_id") Long item_id, HttpServletRequest request, @ModelAttribute("bid") Bid bid) {
-		String username = request.getParameter("username");
+	@PostMapping("/bid/{item_id}/{username}")
+	public String BidItem(@PathVariable("item_id") Long item_id, 
+			@PathVariable("username") String username, 
+			@ModelAttribute("bid") Bid bid) {
+
 		biddingService.bidItem(item_id, username, bid);
 		return "redirect:/auction";
 	}

@@ -21,9 +21,9 @@ public class BiddingService {
 	@Autowired private UserRepository userRepository;
 
 	public Item addItem(Item item) {
-		System.err.println("item.name: " + item.getName());
-		System.err.println("item.description: " + item.getDescription());
-		System.err.println("item.currentBid: " + item.getCurrentBid());
+//		System.err.println("item.name: " + item.getName());
+//		System.err.println("item.description: " + item.getDescription());
+//		System.err.println("item.currentBid: " + item.getCurrentBid());
 		item.setCurrentBid(Float.valueOf(0));
 		return itemRepository.save(item);
 	}
@@ -69,8 +69,11 @@ public class BiddingService {
 		Item item = itemRepository.findById(item_id).get();
 		
 		if(bid.getAmount() > item.getCurrentBid()) {
+			// set item object
 			item.setCurrentBid(bid.getAmount());
 			itemRepository.save(item);
+			
+			// set bid object
 			bid.setItem(item);
 			bid.setUser(userRepository.findByUsername(username));
 			bidRepository.save(bid);
