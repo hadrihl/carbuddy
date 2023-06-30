@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.jasper.tagplugins.jstl.core.ForEach;
@@ -25,6 +26,7 @@ import com.example.carbuddy.entity.User;
 import com.example.carbuddy.repository.RoleRepository;
 import com.example.carbuddy.service.BiddingService;
 import com.example.carbuddy.service.CustomUserDetails;
+import com.example.carbuddy.service.ItemService;
 import com.example.carbuddy.service.UserService;
 
 @Controller
@@ -37,11 +39,16 @@ public class BiddingController {
 	private UserService userService;
 	
 	@Autowired
+	private ItemService itemService;
+	
+	@Autowired
 	private RoleRepository roleRepository;
 
 	@GetMapping("/items")
-	public String getItemsPage(Model model) {
-		model.addAttribute("items", biddingService.getAllItems());
+	public String getItemsPage(Model model,
+			@AuthenticationPrincipal CustomUserDetails loggedinUser) {
+		List<Item> items = userService.getAllItemsByUsername(loggedinUser.getUsername());
+		model.addAttribute("items", items);
 		return "items";
 	}
 	
@@ -51,8 +58,9 @@ public class BiddingController {
 	}
 	
 	@PostMapping("/add-item")
-	public String addItem(@ModelAttribute("item") Item item) {
-		biddingService.addItem(item);
+	public String addItem(@ModelAttribute("item") Item item,
+			@AuthenticationPrincipal CustomUserDetails loggedinUser) {
+		itemService.addItem(item, loggedinUser.getUsername());
 		return "redirect:/items";
 	}
 	
@@ -186,5 +194,12 @@ public class BiddingController {
 			redirectAttributes.addFlashAttribute("str_err", "User already exists! Login '<a href='/signin'>here</a>'");
 			return "redirect:/signup";
 		}
+	}
+	
+	@GetMapping("/dashboard")
+	public String getAdminDashboard(Model model) {
+		model.addAttribute("items", itemService.getAllItems());
+		model.addAttribute("users", userService.getAllUsers());
+		return "dashboard";
 	}
 }

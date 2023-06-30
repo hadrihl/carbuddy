@@ -44,6 +44,7 @@ public class SecurityConfig {
 				.antMatchers(HttpMethod.GET, "/").permitAll()
 				.antMatchers(HttpMethod.GET, "/signup").permitAll()
 				.antMatchers(HttpMethod.POST, "/signup/new").permitAll()
+				.antMatchers(HttpMethod.GET, "/dashboard").hasAuthority("ROLE_ADMIN")
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()

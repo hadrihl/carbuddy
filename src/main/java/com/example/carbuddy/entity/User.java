@@ -39,6 +39,9 @@ public class User {
 	
 	@OneToMany(mappedBy = "user")
 	private List<Bid> bids = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "user")
+	private List<Item> items = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -83,5 +86,12 @@ public class User {
 	public void removeRoles(Role role) {
 		this.roles.remove(role);
 	}
-	
+
+	public List<Item> getItems() {
+		return items;
+	}
+
+	public void addItem(Item item) {
+		this.items.add(item);
+	}
 }

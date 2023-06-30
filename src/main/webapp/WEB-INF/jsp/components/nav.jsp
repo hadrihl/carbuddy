@@ -13,6 +13,7 @@
 			<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 		    <sec:authorize access="hasAuthority('ROLE_ADMIN')">
 			<li><a href="/users">Users</a></li>
+			<li><a href="/dashboard">Dashboard</a></li>
 			</sec:authorize>
 			
 			<li><a href="/items">Items</a></li>

@@ -7,9 +7,12 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -37,6 +40,10 @@ public class Item {
 	
 	@Column(name = "duration")
 	private Duration duration = Duration.ofMinutes(20); // default duration 20 mins
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id")
+	private User user;
 	
 	// constructor
 	public Item() {
@@ -104,6 +111,12 @@ public class Item {
 	public void setOriginalPrice(Float originalPrice) {
 		this.originalPrice = originalPrice;
 	}
-	
-	
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }

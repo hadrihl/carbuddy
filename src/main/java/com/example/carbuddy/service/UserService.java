@@ -1,6 +1,7 @@
 package com.example.carbuddy.service;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.carbuddy.entity.Item;
 import com.example.carbuddy.entity.User;
 import com.example.carbuddy.repository.RoleRepository;
 import com.example.carbuddy.repository.UserRepository;
@@ -51,16 +53,24 @@ public class UserService {
 	}
 	
 	public void createUser(User tmp) {
-	if(userRepository.findByUsername(tmp.getUsername()) == null) {
-		User user = new User();
-		user.setUsername(tmp.getUsername());
-		user.setEmail(tmp.getEmail());
 		
-		user.setPassword(new BCryptPasswordEncoder().encode(tmp.getPassword()));
-		user.addRoles(roleRepository.findRoleByName("ROLE_USER"));
-		userRepository.save(user);
+		if(userRepository.findByUsername(tmp.getUsername()) == null) {
+			User user = new User();
+			user.setUsername(tmp.getUsername());
+			user.setEmail(tmp.getEmail());
+			
+			user.setPassword(new BCryptPasswordEncoder().encode(tmp.getPassword()));
+			user.addRoles(roleRepository.findRoleByName("ROLE_USER"));
+			userRepository.save(user);
+		}
+		
 	}
+	
+	public List<Item> getAllItemsByUsername(String username) {
+		User user = userRepository.findByUsername(username);
+		List<Item> items = user.getItems();
 		
+		return items;
 	}
 }
  

@@ -28,7 +28,7 @@
     			<th>#</th>
     			<th>Item Name</th>
     			<th>Description</th>
-    			<th>Current Bid</th>
+    			<th>Price (MYR)</th>
     			<th>#Action</th>
     		</tr>
     		
@@ -37,7 +37,7 @@
     			<td>${row.index + 1}</td>
     			<td>${item.name}</td>
     			<td>${item.description}</td>
-    			<td>${item.currentBid}</td>
+    			<td>${item.originalPrice}</td>
     			
     			<td>
     			<a href="/edit-item/${item.id}">Edit</a> &nbsp;
