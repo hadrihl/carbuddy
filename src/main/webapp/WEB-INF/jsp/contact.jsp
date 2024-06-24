@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>CarBuddy | Login</title>
+<title>CarBuddy | Contact</title>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -38,7 +38,7 @@
         margin-bottom: 5px;
         font-weight: bold;
     }
-    input {
+    input, textarea {
         margin-bottom: 15px;
         padding: 10px;
         border: 1px solid #ccc;
@@ -58,25 +58,27 @@
 </style>
 </head>
 <body>
-    <header>
-        <h1>Login - Hi-fi Cars Pte Ltd</h1>
+	<header>
+        <h1>Contact Us - Hi-fi Cars Pte Ltd</h1>
     </header>
     <main>
-        <h2>Login to Your Account</h2>
-        <p>Enter your credentials to access your account.</p>
+        <h2>We'd Love to Hear from You!</h2>
+        <p>If you have any questions, feedback, or need assistance, please feel free to contact us using the form below. Our team is here to help you with any inquiries you may have.</p>
 
-        <form:form action="/login" method="post" modelattribute="user">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
+        <form:form action="/contact" method="post" modelattribute="message">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            
-            <c:if test="${not empty errmsg}">
-            <p>${errmsg}</p>
-            </c:if>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
 
-            <button type="submit">Login</button>
+            <label for="subject">Subject:</label>
+            <input type="text" id="subject" name="subject" required>
+
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="6" required></textarea>
+
+            <button type="submit">Send Message</button>
         </form:form>
     </main>
     <footer>

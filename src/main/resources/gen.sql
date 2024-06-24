@@ -34,3 +34,27 @@ create table `bid` (
     amount float,
     primary key (id)
 );
+
+create table `car` (
+    id bigint not null auto_increment,
+    brand varchar(200) not null,
+    model varchar(200) not null,
+    description text not null,
+    year int not null,
+    variant varchar(200) not null,
+    transmission varchar(200) not null,
+    fueltype varchar(200) not null,
+    location varchar(200) not null,
+    price float not null,
+    primary key (id)
+);
+
+create table `message` (
+	id bigint not null auto_increment,
+    sender varchar(200) not null,
+    email varchar(200) not null,
+    subject varchar(200) not null,
+    message text not null,
+    timestamp timestamp,
+    primary key (id)
+);

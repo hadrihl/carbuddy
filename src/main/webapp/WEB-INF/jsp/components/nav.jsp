@@ -6,29 +6,33 @@
 <nav class="navbar">
 	
 	<div class="container">
-		<ul>	
+		<ul>
+			<li><a href="/">Homepage</a></li>
+			
 			<c:if test="${not empty pageContext.request.remoteUser }">
 			<li><a href="/auction">Auction</a></li>
 			
 			<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-		    <sec:authorize access="hasAuthority('ROLE_ADMIN')">
+		    <sec:authorize access="hasAuthority('USER')">
 			<li><a href="/users">Users</a></li>
 			<li><a href="/dashboard">Dashboard</a></li>
-			</sec:authorize>
-			
 			<li><a href="/items">Items</a></li>
+			<li><a href="/cars">Cars</a></li>
+			
 			<li>${pageContext.request.remoteUser }</li>
 			<li>
 				<form:form action="${pageContext.request.contextPath}/logout"><button>Logout</button></form:form>
 			</li>
+			</sec:authorize>
+			
 			</c:if>
-
 			<c:if test="${empty pageContext.request.remoteUser }">
 			<li><a href="/signin">Signin</a></li>
-			<li><a href="/signup">Signup</a></li>
 			</c:if>
 			
-			<li><a href="/">Homepage</a></li>	
+			<li><a href="/signup">Signup</a></li>
+			<li><a href="/contact">Contact</a></li>
+			<li><a href="/about">About</a></li>
 		</ul>
 	</div>
             

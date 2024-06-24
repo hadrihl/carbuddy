@@ -15,7 +15,7 @@
 		<input type="text" id="name" name="name" required></input><br><br>
 		
 		<label for="description">Description: </label>
-		<input type="text" id="description" name="description" required></input><br><br>
+		<textarea id="description" name="description" rows="10" cols="50" required></textarea><br><br>
 		
 		<label for="originalPrice">Price (*min MYR): </label>
 		<input type="number" step="any" id="originalPrice" name="originalPrice" value="${item.originalPrice}" required></input><br><br>

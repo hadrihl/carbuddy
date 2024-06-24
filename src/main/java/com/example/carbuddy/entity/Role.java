@@ -16,9 +16,11 @@ public class Role {
 	
 	private String name;
 
+	// default constructor
 	public Role() {
 	}
 	
+	// constructor: @param name
 	public Role(String name) {
 		this.name = name;
 	}

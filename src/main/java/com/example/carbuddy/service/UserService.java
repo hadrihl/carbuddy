@@ -60,7 +60,7 @@ public class UserService {
 			user.setEmail(tmp.getEmail());
 			
 			user.setPassword(new BCryptPasswordEncoder().encode(tmp.getPassword()));
-			user.addRoles(roleRepository.findRoleByName("ROLE_USER"));
+			user.addRoles(roleRepository.findRoleByName("USER"));
 			userRepository.save(user);
 		}
 		

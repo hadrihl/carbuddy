@@ -20,13 +20,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.carbuddy.entity.Bid;
+import com.example.carbuddy.entity.Car;
 import com.example.carbuddy.entity.Item;
+import com.example.carbuddy.entity.Message;
 import com.example.carbuddy.entity.Role;
 import com.example.carbuddy.entity.User;
 import com.example.carbuddy.repository.RoleRepository;
 import com.example.carbuddy.service.BiddingService;
+import com.example.carbuddy.service.CarService;
 import com.example.carbuddy.service.CustomUserDetails;
 import com.example.carbuddy.service.ItemService;
+import com.example.carbuddy.service.MessageService;
 import com.example.carbuddy.service.UserService;
 
 @Controller
@@ -40,6 +44,12 @@ public class BiddingController {
 	
 	@Autowired
 	private ItemService itemService;
+	
+	@Autowired
+	private CarService carService;
+	
+	@Autowired
+	private MessageService messageService;
 	
 	@Autowired
 	private RoleRepository roleRepository;
@@ -168,7 +178,7 @@ public class BiddingController {
 		return "auction";
 	}
 	
-	@GetMapping("/signin")
+	@GetMapping("/login")
 	public String getSigninPage() {
 		return "signin";
 	}
@@ -178,12 +188,12 @@ public class BiddingController {
 		return "index";
 	}
 	
-	@GetMapping("/signup")
+	@GetMapping("/register")
 	public String getSignupPage() {
-		return "signup";
+		return "register";
 	}
 	
-	@PostMapping("/signup/new")
+	@PostMapping("/register/new")
 	public String processSignup(@ModelAttribute("user") User user,
 			RedirectAttributes redirectAttributes) {
 		if(userService.getUserByEmail(user.getEmail()) == null) {
@@ -201,5 +211,38 @@ public class BiddingController {
 		model.addAttribute("items", itemService.getAllItems());
 		model.addAttribute("users", userService.getAllUsers());
 		return "dashboard";
+	}
+	
+	@GetMapping("/cars")
+	public String getCarsPage(Model model) {
+		List<Car> cars = carService.getAllCars();
+		model.addAttribute("cars", cars);
+		return "cars";
+	}
+	
+	@GetMapping("/cars/new")
+	public String addCarPage() {
+		return "addCar";
+	}
+	
+	@PostMapping("/cars/new")
+	public String processAddCar(@ModelAttribute("car") Car car, Model model) {
+		return "redirect:/cars";
+	}
+	
+	@GetMapping("/about")
+	public String getAboutPage() {
+		return "about";
+	}
+	
+	@GetMapping("/contact")
+	public String getContactPage() {
+		return "contact";
+	}
+	
+	@PostMapping("/contact")
+	public String processMessage(@ModelAttribute("message") Message msg) {
+		messageService.saveMessage(msg);
+		return "redirect:/";
 	}
 }

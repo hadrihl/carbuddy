@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>CarBuddy | Login</title>
+<title>CarBuddy | Register</title>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -59,28 +59,41 @@
 </head>
 <body>
     <header>
-        <h1>Login - Hi-fi Cars Pte Ltd</h1>
+        <h1>Register - Hi-fi Cars Pte Ltd</h1>
     </header>
     <main>
-        <h2>Login to Your Account</h2>
-        <p>Enter your credentials to access your account.</p>
+        <h2>Create Your Account</h2>
+        <p>Fill out the form below to create your account.</p>
 
-        <form:form action="/login" method="post" modelattribute="user">
+        <form:form action="/register/new" method="post" modelattribute="user">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
 
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
-            
-            <c:if test="${not empty errmsg}">
-            <p>${errmsg}</p>
-            </c:if>
 
-            <button type="submit">Login</button>
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+            <button type="submit">Register</button>
         </form:form>
     </main>
     <footer>
         <p>&copy; 2024 <a href="/">Hi-fi Cars Pte Ltd</a>. All rights reserved.</p>
     </footer>
+    <script>
+	    function checkPasswordMatch() {
+	        var password = document.getElementById("password").value;
+	        var confirmPassword = document.getElementById("confirmPassword").value;
+	        if (password !== confirmPassword) {
+	            document.getElementById("passwordMismatchMessage").style.display = "block";
+	        } else {
+	            document.getElementById("passwordMismatchMessage").style.display = "none";
+	        }
+	    }
+	</script>
 </body>
 </html>
