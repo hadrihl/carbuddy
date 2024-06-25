@@ -1,4 +1,4 @@
-package com.example.carbuddy.config;
+package com.example.carbuddy.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,25 +43,28 @@ public class SecurityConfig {
 			.authorizeHttpRequests()
 				.antMatchers(HttpMethod.GET, "/").permitAll()
 				.antMatchers(HttpMethod.GET, "/contact").permitAll()
+				.antMatchers(HttpMethod.POST, "/contact").permitAll()
 				.antMatchers("/about").permitAll()
 				.antMatchers(HttpMethod.GET, "/register").permitAll()
 				.antMatchers(HttpMethod.POST, "/register/new").permitAll()
 				.antMatchers(HttpMethod.GET, "/cars").permitAll()
 				.antMatchers(HttpMethod.GET, "/cars/new").permitAll()
 				.antMatchers(HttpMethod.POST, "/cars/new").permitAll()
+				.antMatchers(HttpMethod.POST, "/search").permitAll()
+				.antMatchers(HttpMethod.POST, "/contact").permitAll()
 				.antMatchers(HttpMethod.GET, "/dashboard").hasAuthority("ROLE_ADMIN")
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()
 				.loginPage("/signin")
 				.loginProcessingUrl("/login")
-				.defaultSuccessUrl("/auction")
+				.defaultSuccessUrl("/cars")
 				.usernameParameter("username")
 				.permitAll()
 				.and()
 			.logout()
 				.invalidateHttpSession(true)
-				.logoutSuccessUrl("/signin")
+				.logoutSuccessUrl("/")
 				.permitAll();
 		
 		return http.build();

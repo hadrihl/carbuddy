@@ -43,7 +43,7 @@
 		
 		<div class="form-group">
 			<label for="name" style="padding-right: 57px;">Fuel Type: </label>
-			<input type="text" id="fuelType" name="fuelType" required></input><br><br>
+			<input type="text" id="fueltype" name="fueltype" required></input><br><br>
 		</div>
 		
 		<div class="form-group">
@@ -53,11 +53,11 @@
 		
 		<div class="form-group">
 			<label for="originalPrice">Price (*min MYR): </label>
-			<input type="number" step="any" id="originalPrice" name="originalPrice" value="${item.originalPrice}" required></input><br><br>
+			<input type="number" id="price" name="price" required></input><br><br>
 		</div>
 				
 		<div class="form-group">
-			<button type="button" onclick="location.href="/cars">Cancel</button>
+			<button type="button" onclick="location.href=/cars">Cancel</button>
 			<input type="submit" value="Submit">
 		</div>
 	</form:form>

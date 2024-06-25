@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="com.fasterxml.jackson.annotation.JsonInclude.Include"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -64,18 +65,7 @@
     </style>
 </head>
 <body>
-	<header><h1>Welcome to CarBuddy Hi-fi Cars Pte Ltd Portal</h1></header>
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>	
-            <li><a href="/browse">Browse Cars</a></li>
-            <li><a href="/register">Register</a></li>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/appointments">Appointments</a></li>
-            <li><a href="/contact">Contact Us</a></li>
-        </ul>
-    </nav>
+	<%@ include file="components/nav.jsp" %>
 
     <main>
         <h2>Your Trusted Platform for Buying and Selling Used Cars</h2>

@@ -19,6 +19,10 @@ public class MessageService {
 	private MessageRepository messageRepository;
 	
 	public void saveMessage(Message msg) {
+		System.err.println(msg.getSender());
+		System.err.println(msg.getEmail());
+		System.err.println(msg.getMessage());
+		System.err.println(msg.getTimestamp());
 		msg.setTimestamp(LocalDateTime.now()); // timestamp
 		messageRepository.save(msg);
 	}

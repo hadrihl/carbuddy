@@ -1,39 +1,30 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<nav class="navbar">
-	
-	<div class="container">
-		<ul>
-			<li><a href="/">Homepage</a></li>
-			
-			<c:if test="${not empty pageContext.request.remoteUser }">
-			<li><a href="/auction">Auction</a></li>
-			
-			<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-		    <sec:authorize access="hasAuthority('USER')">
-			<li><a href="/users">Users</a></li>
-			<li><a href="/dashboard">Dashboard</a></li>
-			<li><a href="/items">Items</a></li>
-			<li><a href="/cars">Cars</a></li>
-			
-			<li>${pageContext.request.remoteUser }</li>
-			<li>
-				<form:form action="${pageContext.request.contextPath}/logout"><button>Logout</button></form:form>
-			</li>
-			</sec:authorize>
-			
-			</c:if>
-			<c:if test="${empty pageContext.request.remoteUser }">
-			<li><a href="/signin">Signin</a></li>
-			</c:if>
-			
-			<li><a href="/signup">Signup</a></li>
-			<li><a href="/contact">Contact</a></li>
-			<li><a href="/about">About</a></li>
-		</ul>
-	</div>
-            
+<header><h1>Welcome to CarBuddy Hi-fi Cars Pte Ltd Portal</h1></header>
+<nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>	
+        <li><a href="/register">Register</a></li>
+        
+        <c:if test="${empty pageContext.request.remoteUser}">
+        <li><a href="/login">Login</a></li>
+        
+        </c:if>
+        
+        <c:if test="${not empty pageContext.request.remoteUser}">
+        <li><a href="/cars">Browse Cars</a></li>
+        <li><a href="/appointments">Appointments</a></li>
+        <li><a href="/contact">Contact Us</a></li>
+        
+        <li><a href="#" id="logout-link">Logout</a></li>
+        </c:if>
+        
+        
+    </ul>
 </nav>
+<form:form id="logout-form" action="/logout" method="post"></form:form>
+<script>
+    document.getElementById('logout-link').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default link behavior
+        document.getElementById('logout-form').submit(); // Submit the hidden form
+    });
+</script>

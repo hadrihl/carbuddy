@@ -20,5 +20,13 @@ public class CarService {
 	public List<Car> getAllCars() {
 		return carRepository.findAll();
 	}
+	
+	public void create(Car car) {
+		carRepository.save(car);
+	}
+	
+	public List<Car> searchCars(String keyword) {
+		return carRepository.search(keyword);
+	}
 
 }

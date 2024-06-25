@@ -1,6 +1,7 @@
 package com.example.carbuddy.entity;
 
 import javax.annotation.Generated;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,9 +16,9 @@ public class Car {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String Brand;
+	private String brand;
 	
-	private String Model;
+	private String model;
 	
 	private String description;
 	
@@ -27,7 +28,8 @@ public class Car {
 	
 	private String transmission; 
 	
-	private String fuelType;
+	@Column(name = "fuel_type")
+	private String fueltype;
 	
 	private String location;
 	
@@ -42,19 +44,19 @@ public class Car {
 	}
 
 	public String getBrand() {
-		return Brand;
+		return brand;
 	}
 
 	public void setBrand(String brand) {
-		Brand = brand;
+		brand = brand;
 	}
 
 	public String getModel() {
-		return Model;
+		return model;
 	}
 
 	public void setModel(String model) {
-		Model = model;
+		model = model;
 	}
 
 	public Integer getYear() {
@@ -82,11 +84,11 @@ public class Car {
 	}
 
 	public String getFuelType() {
-		return fuelType;
+		return fueltype;
 	}
 
 	public void setFuelType(String fuelType) {
-		this.fuelType = fuelType;
+		this.fueltype = fueltype;
 	}
 
 	public String getLocation() {
@@ -103,5 +105,21 @@ public class Car {
 
 	public void setPrice(Float price) {
 		this.price = price;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getFueltype() {
+		return fueltype;
+	}
+
+	public void setFueltype(String fueltype) {
+		this.fueltype = fueltype;
 	}
 }

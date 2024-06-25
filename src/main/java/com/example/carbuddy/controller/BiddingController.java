@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.carbuddy.entity.Bid;
@@ -227,6 +228,7 @@ public class BiddingController {
 	
 	@PostMapping("/cars/new")
 	public String processAddCar(@ModelAttribute("car") Car car, Model model) {
+		carService.create(car);
 		return "redirect:/cars";
 	}
 	
@@ -242,6 +244,10 @@ public class BiddingController {
 	
 	@PostMapping("/contact")
 	public String processMessage(@ModelAttribute("message") Message msg) {
+		System.err.println(msg.getSender());
+		System.err.println(msg.getEmail());
+		System.err.println(msg.getMessage());
+		System.err.println(msg.getTimestamp());
 		messageService.saveMessage(msg);
 		return "redirect:/";
 	}

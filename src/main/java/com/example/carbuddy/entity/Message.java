@@ -2,6 +2,7 @@ package com.example.carbuddy.entity;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,6 +23,7 @@ public class Message {
 	
 	private String subject;
 	
+	@Column(columnDefinition = "TEXT")
 	private String message;
 
 	private LocalDateTime timestamp;
