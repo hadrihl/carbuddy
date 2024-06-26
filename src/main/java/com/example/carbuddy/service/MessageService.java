@@ -18,12 +18,9 @@ public class MessageService {
 	@Autowired
 	private MessageRepository messageRepository;
 	
-	public void saveMessage(Message msg) {
-		System.err.println(msg.getSender());
-		System.err.println(msg.getEmail());
-		System.err.println(msg.getMessage());
-		System.err.println(msg.getTimestamp());
-		msg.setTimestamp(LocalDateTime.now()); // timestamp
+	public void saveMessage(Message msg, String textmessage) {
+		msg.setMessage(textmessage); // set the message (text)
+		msg.setTimestamp(LocalDateTime.now()); // set the timestamp
 		messageRepository.save(msg);
 	}
 

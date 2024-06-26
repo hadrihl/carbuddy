@@ -236,19 +236,4 @@ public class BiddingController {
 	public String getAboutPage() {
 		return "about";
 	}
-	
-	@GetMapping("/contact")
-	public String getContactPage() {
-		return "contact";
-	}
-	
-	@PostMapping("/contact")
-	public String processMessage(@ModelAttribute("message") Message msg) {
-		System.err.println(msg.getSender());
-		System.err.println(msg.getEmail());
-		System.err.println(msg.getMessage());
-		System.err.println(msg.getTimestamp());
-		messageService.saveMessage(msg);
-		return "redirect:/";
-	}
 }

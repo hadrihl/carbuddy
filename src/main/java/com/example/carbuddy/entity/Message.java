@@ -24,7 +24,7 @@ public class Message {
 	private String subject;
 	
 	@Column(columnDefinition = "TEXT")
-	private String message;
+	private String textmessage;
 
 	private LocalDateTime timestamp;
 
@@ -61,11 +61,11 @@ public class Message {
 	}
 
 	public String getMessage() {
-		return message;
+		return textmessage;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setMessage(String textmessage) {
+		this.textmessage = textmessage;
 	}
 
 	public LocalDateTime getTimestamp() {
